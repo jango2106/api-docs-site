@@ -1,12 +1,17 @@
 import React from "react";
 import SwaggerUI from "swagger-ui-react"
 import "swagger-ui-react/swagger-ui.css"
-const docFiles = require.context('./docs');
 
 class Test extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { docs: this.listOfDocs(), activeDoc: "" };
+    this.state = { docs: {}, activeDoc: "" };
+  }
+
+  async componentDidMount() {
+    const docs = await this.swaggerDocs()
+    console.log(docs)
+    this.setState({ docs: docs })
   }
 
   render() {
@@ -16,10 +21,11 @@ class Test extends React.Component {
         <div id="mySidenav" className="sidenav">
           <h2 className="white">Documentation</h2>
           <button className="closebtn" onClick={() => this.closeNav()}><i className="fa fa-times"></i></button>
-          <ul className="no-bullet white">
-            {Object.keys(this.state.docs).map(key => <li key={key}><button onClick={() => this.setActiveDoc(key)}>{key}</button></li>)}
-            <li><button onClick={() => this.setActiveDoc("")}>Clear</button></li>
-          </ul>
+          {this.state.docs ?
+            (<ul className="no-bullet white">
+              {Object.keys(this.state.docs).map(key => <li key={key}><button onClick={() => this.setActiveDoc(key)}>{key}</button></li>)}
+              <li><button onClick={() => this.setActiveDoc("")}>Clear</button></li>
+            </ul>) : (<div></div>)}
         </div>
         <div>
           {this.state.activeDoc ? (
@@ -30,16 +36,23 @@ class Test extends React.Component {
     )
   }
 
-  listOfDocs() {
-    var structure = {};
-    docFiles.keys().forEach(key => {
+  async getSwaggerManifestFile() {
+    const manifestFiles = await fetch(process.env.PUBLIC_URL + '/swagger-doc-manifest.json');
+    return await manifestFiles.json()
+  }
+
+  async swaggerDocs() {
+    var structure = {}
+    const manifest = await this.getSwaggerManifestFile();
+    console.log(manifest)
+    for (const key of manifest) {
       if (key.match(/json/)) {
-        const test = this.docFile(key.replace('./', ''))
+        const swaggerDoc = await this.getSwaggerDocFile(key.replace('./', ''))
         const substruct = {}
-        substruct[test.info.title] = test
+        substruct[swaggerDoc.info.title] = swaggerDoc
         structure = { ...structure, ...substruct }
       }
-    });
+    }
     return Object.keys(structure).sort(this.sortFunction).reduce(
       (obj, key) => {
         obj[key] = structure[key];
@@ -49,8 +62,9 @@ class Test extends React.Component {
     );
   }
 
-  docFile(name) {
-    return require(`./docs/${name}`)
+  async getSwaggerDocFile(name) {
+    const fileResponse = await fetch(process.env.PUBLIC_URL + `/swagger-docs/${name}`)
+    return await fileResponse.json()
   }
 
   async setActiveDoc(name) {
@@ -58,11 +72,8 @@ class Test extends React.Component {
   }
 
   renderButtons() {
-    console.log("Rendering buttons")
-    console.log(JSON.parse(JSON.stringify(this.state)))
     if (this.state.docs) {
       this.state.docs.forEach(element => {
-        console.log(element);
         return <button>{element}</button>
       });
     } else {
