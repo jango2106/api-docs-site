@@ -8,22 +8,22 @@ class Test extends React.Component {
     super(props);
     this.state = { docs: this.listOfDocs(), activeDoc: "" };
   }
+
   render() {
     return (
       <div id="main">
-
         <button onClick={() => this.openNav()}><i className="fa fa-align-justify"></i></button>
         <div id="mySidenav" className="sidenav">
           <h2 className="white">Documentation</h2>
           <button className="closebtn" onClick={() => this.closeNav()}><i className="fa fa-times"></i></button>
           <ul className="no-bullet white">
-            {this.state.docs.map(item => <li key={item}><button onClick={() => this.setActiveDoc(item)}>{item}</button></li>)}
+            {Object.keys(this.state.docs).map(key => <li key={key}><button onClick={() => this.setActiveDoc(key)}>{key}</button></li>)}
             <li><button onClick={() => this.setActiveDoc("")}>Clear</button></li>
           </ul>
         </div>
         <div>
           {this.state.activeDoc ? (
-            <SwaggerUI spec={this.docFile(this.state.activeDoc)} />) : (<div></div>)
+            <SwaggerUI spec={this.state.docs[this.state.activeDoc]} />) : (<div></div>)
           }
         </div>
       </div>
@@ -31,13 +31,22 @@ class Test extends React.Component {
   }
 
   listOfDocs() {
-    const list = [];
+    var structure = {};
     docFiles.keys().forEach(key => {
       if (key.match(/json/)) {
-        list.push(key.replace('./', ''));
+        const test = this.docFile(key.replace('./', ''))
+        const substruct = {}
+        substruct[test.info.title] = test
+        structure = { ...structure, ...substruct }
       }
     });
-    return list;
+    return Object.keys(structure).sort(this.sortFunction).reduce(
+      (obj, key) => {
+        obj[key] = structure[key];
+        return obj;
+      },
+      {}
+    );
   }
 
   docFile(name) {
@@ -69,6 +78,17 @@ class Test extends React.Component {
     document.getElementById("mySidenav").style.width = "0";
   }
 
+  sortFunction = (a, b) => {
+    var nameA = a.toUpperCase();
+    var nameB = b.toUpperCase();
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  }
 }
 
 export default Test;
