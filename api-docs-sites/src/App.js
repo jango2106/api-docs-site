@@ -2,17 +2,15 @@ import React from "react";
 import SwaggerUI from "swagger-ui-react"
 import "swagger-ui-react/swagger-ui.css"
 
-class Test extends React.Component {
+class Swagger extends React.Component {
   constructor(props) {
     super(props);
     this.state = { docs: {}, activeDoc: "" };
   }
 
   async componentDidMount() {
-    await this.populateDocs();
-    setInterval(async () => {
-      await this.populateDocs();
-    }, 20000)
+    const docs = await this.swaggerDocs()
+    this.setState({ docs: docs })
   }
 
   render() {
@@ -47,7 +45,6 @@ class Test extends React.Component {
     const manifest = await this.getSwaggerManifestFile();
     for (const key of manifest) {
       if (key.match(/json/) && !this.state.docs[key]) {
-        console.log(`Fetching ${key}`)
         const swaggerDoc = await this.getSwaggerDocFile(key.replace('./', ''))
         const substruct = {}
         substruct[key] = swaggerDoc
@@ -101,12 +98,6 @@ class Test extends React.Component {
     }
     return 0;
   }
-
-  async populateDocs() {
-    const docs = await this.swaggerDocs()
-    this.setState({ docs: docs })
-    console.log("State Updated")
-  }
 }
 
-export default Test;
+export default Swagger;
