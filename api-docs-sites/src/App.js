@@ -24,7 +24,7 @@ class Test extends React.Component {
           <button className="closebtn" onClick={() => this.closeNav()}><i className="fa fa-times"></i></button>
           {this.state.docs ?
             (<ul className="no-bullet white">
-              {Object.keys(this.state.docs).map(key => <li key={key}><button onClick={() => this.setActiveDoc(key)}>{key}</button></li>)}
+              {Object.keys(this.state.docs).map(key => <li key={key}><button onClick={() => this.setActiveDoc(key)}>{this.state.docs[key].info.title}</button></li>)}
               <li><button onClick={() => this.setActiveDoc("")}>Clear</button></li>
             </ul>) : (<div></div>)}
         </div>
@@ -45,12 +45,12 @@ class Test extends React.Component {
   async swaggerDocs() {
     var structure = {}
     const manifest = await this.getSwaggerManifestFile();
-    console.log(manifest)
     for (const key of manifest) {
-      if (key.match(/json/)) {
+      if (key.match(/json/) && !this.state.docs[key]) {
+        console.log(`Fetching ${key}`)
         const swaggerDoc = await this.getSwaggerDocFile(key.replace('./', ''))
         const substruct = {}
-        substruct[swaggerDoc.info.title] = swaggerDoc
+        substruct[key] = swaggerDoc
         structure = { ...structure, ...substruct }
       }
     }

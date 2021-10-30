@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jango2106/api-docs-site.git"
+    "url": "git+https://github.com/jango2106/api-docs-sites.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jango2106/api-docs-site/issues"
+    "url": "https://github.com/jango2106/api-docs-sites/issues"
   },
-  "homepage": "https://github.com/jango2106/api-docs-site#readme",
+  "homepage": "https://github.com/jango2106/api-docs-sites#readme",
   "dependencies": {
     "gh-pages": "^3.2.3",
     "swagger-ui-react": "^3.52.5",
