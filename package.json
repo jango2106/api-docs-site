@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jango2106/api-docs-site#readme",
   "dependencies": {
+    "gh-pages": "^3.2.3",
     "swagger-ui-react": "^3.52.5",
     "yarn": "^1.22.17"
   }
