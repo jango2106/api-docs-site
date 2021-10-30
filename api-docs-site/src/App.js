@@ -12,11 +12,11 @@ class Test extends React.Component {
     return (
       <div id="main">
 
-        <button onClick={() => this.openNav()}><i class="fas fa-align-justify"></i></button>
-        <div id="mySidenav" class="sidenav">
-          <h2 class="white">Documentation</h2>
-          <button class="closebtn" onClick={() => this.closeNav()}><i class="fas fa-times"></i></button>
-          <ul class="no-bullet white">
+        <button onClick={() => this.openNav()}><i className="fa fa-align-justify"></i></button>
+        <div id="mySidenav" className="sidenav">
+          <h2 className="white">Documentation</h2>
+          <button className="closebtn" onClick={() => this.closeNav()}><i className="fa fa-times"></i></button>
+          <ul className="no-bullet white">
             {this.state.docs.map(item => <li key={item}><button onClick={() => this.setActiveDoc(item)}>{item}</button></li>)}
             <li><button onClick={() => this.setActiveDoc("")}>Clear</button></li>
           </ul>
