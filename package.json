@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/jango2106/api-docs-site/issues"
   },
-  "homepage": "https://github.com/jango2106/api-docs-site#readme"
+  "homepage": "https://github.com/jango2106/api-docs-site#readme",
+  "dependencies": {
+    "swagger-ui-react": "^3.52.5",
+    "yarn": "^1.22.17"
+  }
 }
