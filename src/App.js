@@ -1,6 +1,7 @@
 import React from "react";
 import SwaggerUI from "swagger-ui-react"
 import "swagger-ui-react/swagger-ui.css"
+import * as yaml from 'js-yaml'
 
 class Swagger extends React.Component {
   constructor(props) {
@@ -27,8 +28,8 @@ class Swagger extends React.Component {
             </ul>) : (<div></div>)}
         </div>
         <div>
-          {this.state.activeDoc ? (
-            <SwaggerUI spec={this.state.docs[this.state.activeDoc]} />) : (<div></div>)
+          {this.state.activeDoc ?
+            (<SwaggerUI url={process.env.PUBLIC_URL + '/swagger-docs/' + this.state.activeDoc} />) : (<div></div>)
           }
         </div>
       </div>
@@ -44,7 +45,7 @@ class Swagger extends React.Component {
     var structure = {}
     const manifest = await this.getSwaggerManifestFile();
     for (const key of manifest) {
-      if (key.match(/json/) && !this.state.docs[key]) {
+      if (!this.state.docs[key]) {
         const swaggerDoc = await this.getSwaggerDocFile(key.replace('./', ''))
         const substruct = {}
         substruct[key] = swaggerDoc
@@ -62,10 +63,14 @@ class Swagger extends React.Component {
 
   async getSwaggerDocFile(name) {
     const fileResponse = await fetch(process.env.PUBLIC_URL + `/swagger-docs/${name}`)
+    if (name.match(/.yaml/)) {
+      return yaml.load(await fileResponse.text())
+    }
     return await fileResponse.json()
   }
 
   async setActiveDoc(name) {
+    console.log(name)
     await this.setState({ activeDoc: name })
   }
 
