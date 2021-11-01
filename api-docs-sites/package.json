@@ -1,7 +1,7 @@
 {
-  "name": "api-docs-sites",
+  "name": "api-docs-site",
   "version": "0.1.0",
-  "homepage": "https://jango2106.github.io/api-docs-sites/",
+  "homepage": "https://jango2106.github.io/api-docs-site/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
