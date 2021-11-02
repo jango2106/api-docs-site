@@ -29,7 +29,7 @@ class Swagger extends React.Component {
         </div>
         <div>
           {this.state.activeDoc ?
-            (<SwaggerUI url={process.env.PUBLIC_URL + '/swagger-docs/' + this.state.activeDoc} />) : (<div></div>)
+            (<SwaggerUI spec={this.state.docs[this.state.activeDoc]} />) : (<div></div>)
           }
         </div>
       </div>
@@ -37,7 +37,7 @@ class Swagger extends React.Component {
   }
 
   async getSwaggerManifestFile() {
-    const manifestFiles = await fetch(process.env.PUBLIC_URL + '/swagger-doc-manifest.json');
+    const manifestFiles = await fetch('/doc-manifest.json');
     return await manifestFiles.json()
   }
 
@@ -62,7 +62,7 @@ class Swagger extends React.Component {
   }
 
   async getSwaggerDocFile(name) {
-    const fileResponse = await fetch(process.env.PUBLIC_URL + `/swagger-docs/${name}`)
+    const fileResponse = await fetch(`/docs/${name}`)
     if (name.match(/.yaml/)) {
       return yaml.load(await fileResponse.text())
     }
@@ -70,7 +70,6 @@ class Swagger extends React.Component {
   }
 
   async setActiveDoc(name) {
-    console.log(name)
     await this.setState({ activeDoc: name })
   }
 

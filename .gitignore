@@ -22,6 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-/public/swagger-docs/*
-/public/swagger-docs
-/public/swagger-doc-manifest.json
+/public/docs/*
+/public/docs
+/public/doc-manifest.json

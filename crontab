@@ -1,0 +1,1 @@
+* * * * * root sh /app/generate-docs-manifest.sh >> /var/log/cron.log
