@@ -1,6 +1,6 @@
 #!/bin/sh
 echo "generating files..."
-sh generate-docs-manifest.sh
+sh process-docs.sh
 echo "starting crontab..."
 crontab /etc/cron.d/manifest-cron
 cron start

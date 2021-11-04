@@ -1,1 +1,1 @@
-* * * * * root sh /app/generate-docs-manifest.sh >> /var/log/cron.log
+* * * * * root sh /app/process-docs.sh >> /var/log/cron.log

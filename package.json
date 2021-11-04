@@ -16,10 +16,10 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "yarn generate-docs-manifest && react-scripts start",
-    "generate-docs-manifest": "sh ./generate-docs-manifest-local.sh",
+    "start": "yarn process-docs && react-scripts start",
+    "process-docs": "sh ./process-docs.sh -l",
     "build": "react-scripts build",
-    "deploy": "generate-docs-manifest && yarn build && gh-pages -d build",
+    "deploy": "process-docs && yarn build && gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
