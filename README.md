@@ -6,16 +6,16 @@ A single site to host all of your OpenAPI 3.0 and Swagger 2.0 json/yaml files. I
 
 ### Docker (Broken)
 #### Build
-
-docker build -t api-doc-site:latest .
+`docker build -t api-doc-site:latest .`
 
 #### Run
+`docker run --name api-doc-site -d -p 8080:80 -v LOCAL_PATH_TO_DOCS:/docs api-doc-site:latest`
 
-docker run --name api-doc-site -d -p 8080:80 -v ./:/docs api-doc-site:latest
+Docker deployment will allow you to mount a local directory (LOCAL_PATH_TO_DOCS) to a volume on the container. There is a cronjob running in the container that will regenerate the files automatically. Any changes made to the LOCAL_PATH_TO_DOCS will automatically update the containers. 
 
 ### Yarn
 #### Build
-yarn install
+`yarn install`
 
 #### Run
 `yarn start`
