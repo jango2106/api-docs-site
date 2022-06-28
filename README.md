@@ -4,10 +4,18 @@ A single site to host all of your OpenAPI 3.0 and Swagger 2.0 json/yaml files. I
 
 ## How to run
 
-### Build
+### Docker
+#### Build
 
 docker build -t api-doc-site:latest .
 
-### Run
+#### Run
 
 docker run --name api-doc-site -d -p 8080:80 -v ./:/docs api-doc-site:latest
+
+### Yarn
+#### Build
+yarn install
+
+#### Run
+yarn start
