@@ -4,7 +4,7 @@ A single site to host all of your OpenAPI 3.0 and Swagger 2.0 json/yaml files. I
 
 ## How to run
 
-### Docker
+### Docker (Broken)
 #### Build
 
 docker build -t api-doc-site:latest .
@@ -18,4 +18,6 @@ docker run --name api-doc-site -d -p 8080:80 -v ./:/docs api-doc-site:latest
 yarn install
 
 #### Run
-yarn start
+`yarn start`
+
+This will copy all files in the ./docs directory into the ./public directory and automatically update the manifest file with all of the new json/yaml files. Any time you want to add or remove a swagger doc, just make a change to the ./docs folder and run the `yarn run generate-docs-manifest` command to regenerate the files. Refresh the page to see changes.
