@@ -1,4 +1,5 @@
 #!/bin/sh
+
 echo "generating files..."
 sh generate-docs-manifest.sh
 echo "starting crontab..."
