@@ -10,4 +10,4 @@ docker build -t api-doc-site:latest .
 
 ### Run
 
-docker run --name api-doc-site -d -p 8080:80 -v directory-with-api-docs:/docs api-doc-site:latest
+docker run --name api-doc-site -d -p 8080:80 -v ./:/docs api-doc-site:latest
